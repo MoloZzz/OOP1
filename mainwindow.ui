@@ -386,7 +386,7 @@
          <item>
           <widget class="QRadioButton" name="radioButton_5">
            <property name="text">
-            <string>H.m.s</string>
+            <string>HH.m.s</string>
            </property>
           </widget>
          </item>

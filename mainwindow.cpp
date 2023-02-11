@@ -324,3 +324,6 @@ void MainWindow::on_radioButton_5_clicked()
     typeTime = "HH.m.s";
 }
 
+
+
+
