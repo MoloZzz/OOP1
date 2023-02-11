@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, SIGNAL(timeout()) ,this ,SLOT(TimerSlot()) );
 
     timer->start(1000);
+
+    typeDate = "dd.MM.yyyy";
+    typeTime = "hh:mm";
 }
 
 MainWindow::~MainWindow()
@@ -95,16 +98,16 @@ for(const timeT &child: mainList){
         QString outString;
         for(const timeT &print: mainList){
             if(print.type == "budilnik"){
-                outString = print.date.toString("dd.MM.yyyy") + " " + print.time.toString("hh:mm") + " " + " " + "Будильник " + print.info;
+                outString = print.date.toString(typeDate) + " " + print.time.toString(typeTime) + " " + " " + "Будильник " + print.info;
 
             }else if(print.type == "timer"){
                 if(print.info == ""){
 
-                outString = print.date.toString("dd.MM.yyyy") + " " + print.time.toString("hh:mm") + " " + "Таймер";
+                outString = print.date.toString(typeDate) + " " + print.time.toString(typeTime) + " " + "Таймер";
 
                 }else{
 
-                outString = print.date.toString("dd.MM.yyyy") + " " + print.time.toString("hh:mm") + " "
+                outString = print.date.toString(typeDate) + " " + print.time.toString(typeTime) + " "
                         + "Таймер, відкриває файл: " + print.info;
 
                 }
@@ -185,13 +188,13 @@ if(( Date == QDate::currentDate() && Time > QTime::currentTime() ) || ( Date > Q
 
 
 
-    QMessageBox::about(this,"Додано успішно",Date.toString("dd.MM.yyyy") + " " + Time.toString("hh:mm") + " " + Info + " " + "Будильник");
+    QMessageBox::about(this,"Додано успішно",Date.toString(typeDate) + " " + Time.toString(typeTime) + " " + Info + " " + "Будильник");
 
     ui->timeEdit->setTime(QTime::currentTime());
     ui->textEdit->setText("");
 
 
-    QString outString = Date.toString("dd.MM.yyyy") + " " + Time.toString("hh:mm") + " " + " " + "Будильник " + Info;
+    QString outString = Date.toString(typeDate) + " " + Time.toString(typeTime) + " " + " " + "Будильник " + Info;
 
     ui->listWidget->addItem(outString);
 
@@ -281,14 +284,14 @@ void MainWindow::on_pushButton_2_clicked()
       QString outString;
      if(fileway != "" || fileway != nullptr){
 
-         QMessageBox::about(this,"Додано успішно",resD.toString("dd.MM.yyyy") + " " + QTime(resHour,resMinute,resSecond).toString("hh:mm") + " "
+         QMessageBox::about(this,"Додано успішно",resD.toString(typeDate) + " " + QTime(resHour,resMinute,resSecond).toString(typeTime) + " "
                             + "Таймер \nЯкщо шлях вірний,то по закінченню часу відкриється файл: " + fileway);
 
-         outString = resD.toString("dd.MM.yyyy") + " " + QTime(resHour,resMinute,resSecond).toString("hh:mm") + " "
+         outString = resD.toString(typeDate) + " " + QTime(resHour,resMinute,resSecond).toString(typeTime) + " "
                  + "Таймер, відкриває файл: " + fileway;
      }else{
-         QMessageBox::about(this,"Додано успішно",resD.toString("dd.MM.yyyy") + " " + QTime(resHour,resMinute,resSecond).toString("hh:mm") + " " + "Таймер");
-         outString = resD.toString("dd.MM.yyyy") + " " + QTime(resHour,resMinute,resSecond).toString("hh:mm") + " " + "Таймер";
+         QMessageBox::about(this,"Додано успішно",resD.toString(typeDate) + " " + QTime(resHour,resMinute,resSecond).toString(typeTime) + " " + "Таймер");
+         outString = resD.toString(typeDate) + " " + QTime(resHour,resMinute,resSecond).toString(typeTime) + " " + "Таймер";
 
      }
 
@@ -301,5 +304,23 @@ void MainWindow::on_pushButton_2_clicked()
     ui->listWidget->addItem(outString);
 
     }
+}
+
+
+void MainWindow::on_radioButton_3_clicked()
+{
+    typeTime = "hh:mm:ss";
+}
+
+
+void MainWindow::on_radioButton_4_clicked()
+{
+    typeTime = "hh:mm";
+}
+
+
+void MainWindow::on_radioButton_5_clicked()
+{
+    typeTime = "HH.m.s";
 }
 
