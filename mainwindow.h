@@ -16,6 +16,10 @@
 
 #include<fstream>
 
+#include <Windows.h>
+
+
+
 
 using namespace std;
 

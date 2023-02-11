@@ -3,6 +3,7 @@
 
 
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -36,13 +37,49 @@ time = QTime::currentTime();
 
 time.setHMS(time.hour(),time.minute(),time.second(),0);
 
+
 if(!mainList.empty()){
+
 int pos = 0;
+
 for(const timeT &child: mainList){
     if(child.date == date && child.time == time){
 
         //2 variants timer and alarm
-        QMessageBox::about(this,"turn off","this");
+        if(child.type == "budilnik"){
+            if(child.info != ""){
+
+              MessageBeep(MB_ICONEXCLAMATION);
+              QMessageBox::about(this,"Спрацював будильник!",child.info);
+
+
+            }else{
+
+                MessageBeep(MB_ICONEXCLAMATION);
+                QMessageBox::about(this,"Спрацював будильник!","Спрацював будильник без опису");
+
+            }
+        }else if(child.type == "timer"){
+            if(child.info != ""){
+
+              MessageBeep(MB_ICONEXCLAMATION);
+              QMessageBox::about(this,"Спрацював таймер!","Відкрито файл: " + child.info);
+
+
+
+            }else{
+
+              MessageBeep(MB_ICONEXCLAMATION);
+              QMessageBox::about(this,"Спрацював таймер!","Час вичерпано!");
+
+
+            }
+
+        }else{
+            QMessageBox::warning(this,"Помилка типу","Помилка типу");
+
+        }
+
 
         mainList.erase(mainList.begin() + pos);
 
