@@ -63,6 +63,11 @@ for(const timeT &child: mainList){
             if(child.info != ""){
 
               MessageBeep(MB_ICONEXCLAMATION);
+
+              const char* STRopen = (child.info.toStdString()).c_str();
+
+              system(STRopen);
+
               QMessageBox::about(this,"Спрацював таймер!","Відкрито файл: " + child.info);
 
 
