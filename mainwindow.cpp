@@ -37,15 +37,42 @@ time = QTime::currentTime();
 time.setHMS(time.hour(),time.minute(),time.second(),0);
 
 if(!mainList.empty()){
+int pos = 0;
+for(const timeT &child: mainList){
+    if(child.date == date && child.time == time){
 
-if(date == mainList.begin()->date && time == mainList.begin()->time){
+        //2 variants timer and alarm
+        QMessageBox::about(this,"turn off","this");
 
-    QMessageBox::about(this,"bzzz","bzzz");
+        mainList.erase(mainList.begin() + pos);
 
 
+        ui->listWidget->clear();
 
-    ui->listWidget->clear();
 
+        QString outString;
+        for(const timeT &print: mainList){
+            if(print.type == "budilnik"){
+                outString = print.date.toString("dd.MM.yyyy") + " " + print.time.toString("hh:mm") + " " + " " + "Будильник " + print.info;
+
+            }else if(print.type == "timer"){
+                if(print.info == ""){
+
+                outString = print.date.toString("dd.MM.yyyy") + " " + print.time.toString("hh:mm") + " " + "Таймер";
+
+                }else{
+
+                outString = print.date.toString("dd.MM.yyyy") + " " + print.time.toString("hh:mm") + " "
+                        + "Таймер, відкриває файл: " + print.info;
+
+                }
+            }else{
+                QMessageBox::warning(this,"Помилка типу","Помилка типу");
+            }
+            ui->listWidget->addItem(outString);
+        }
+    }
+    pos++;
 }
 
 }
@@ -54,7 +81,7 @@ if(date == mainList.begin()->date && time == mainList.begin()->time){
 
 
 
-
+/*
 void sortV(std::vector<timeT> &V){
 
     if(V.size() <= 1){
@@ -78,7 +105,7 @@ void sortV(std::vector<timeT> &V){
 
 
 }
-
+*/
 
 //add budilik
 void MainWindow::on_pushButton_clicked()
@@ -113,7 +140,7 @@ if(( Date == QDate::currentDate() && Time > QTime::currentTime() ) || ( Date > Q
     timeT newNode(Time,Date,Info,Type);
 
     mainList.push_back(newNode);
-   // sortV(mainList);
+
 
 
     QMessageBox::about(this,"Додано успішно",Date.toString("dd.MM.yyyy") + " " + Time.toString("hh:mm") + " " + Info + " " + "Будильник");
@@ -159,6 +186,12 @@ void MainWindow::on_pushButton_2_clicked()
         return void();
     }
 
+    if(h <= 0 && m <= 0 && s <= 4){
+
+    QMessageBox::warning(this,"Помилка","Мінімальний час таймера - 5 секунд!");
+
+    return void();
+    }
 
     QDate resD = QDate::currentDate();
 
@@ -202,7 +235,6 @@ void MainWindow::on_pushButton_2_clicked()
 
      mainList.push_back(timeT(QTime(resHour,resMinute,resSecond),resD,fileway,"timer"));
 
-     sortV(mainList);
 
       QString outString;
      if(fileway != "" || fileway != nullptr){
